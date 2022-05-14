@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<main id="main">
+  <section id="contact" class="contact mb-5">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row">
+        <div class="col-lg-12 text-center mb-5">
+          <h1 class="page-title">Update</h1>
+        </div>
+      </div>
+
+      <div class="form mt-5">
+        <form action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">Username:
+              {{ u_form.username}}
+            </div>
+          </div>
+          <br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">First Name:
+              {{ u_form.first_name}}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">Last Name:
+              {{ u_form.last_name}}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">Mobile:
+              {{ p_form.mobile}}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">Date Of Birth:
+              {{ p_form.dob}}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">City:
+              {{ p_form.city}}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">Gender:
+              {{ p_form.gender}}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">State:
+              {{ p_form.state}}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">Profile Photo:
+              {{ p_form.image }}
+            </div>
+          </div><br>
+          <div class="row justify-content-center">
+            <div class="form-group col-md-6">Bio:
+              {{ p_form.bio }}
+            </div>
+          </div><br>
+          <div class="text-center"><button type="submit" class="btn btn-primary">Save</button></div>
+        </form><br>
+        <div class="text-center">
+          <form action="{% url 'userprofile' %}"><button type="submit" class="btn btn-primary">Back</button></form>
+        </div>
+      </div><!-- End Contact Form -->
+
+    </div>
+  </section>
+</main>
+
+{% endblock content %}

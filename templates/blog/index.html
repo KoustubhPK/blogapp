@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<title>{% block title %}Home{% endblock %}</title>
+  <main id="main">
+
+    <!-- ======= Hero Slider Section ======= -->
+    <section id="hero-slider" class="hero-slider">
+      <div class="container-md" data-aos="fade-in">
+        <div class="row">
+          <div class="col-12">
+            <div class="swiper sliderFeaturedPosts">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <a href="{% url 'mahabharata-war' %}" class="img-bg d-flex align-items-end" style="background-image: url('static/img/mahabharata-war.jpg');">
+                    <div class="img-bg-inner">
+                      <h2>Eighteen days of Mahabharata war</h2>
+                      <p>Mahabharata war which lasted eighteen days has seen various great warriors in action. On one side, there were five pandavas with Krishna as their guide, another side was full of great warriors, Bhishma, Drona, Karna and many more.</p>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a href="{% url 'karna-war' %}" class="img-bg d-flex align-items-end" style="background-image: url('static/img/karna-war.jpg');">
+                    <div class="img-bg-inner">
+                      <h2>Karna-The HERO of Mahabharata</h2>
+                      <p>Oh, thy glory shall remain, it will echo off all the corners of the world until the end of times. Thou didn’t fell to die but to fly.</p>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a href="{% url 'role-of-military' %}" class="img-bg d-flex align-items-end" style="background-image: url('static/img/role-of-military.jpg');">
+                    <div class="img-bg-inner">
+                      <h2>Role of Military History</h2>
+                      <p>Napoleon had once famously said that ‘morale to the material is like three is to one’. Military history that celebrates the glorious deeds of past can boost the morale of soldiers and citizens alike.</p>
+                    </div>
+                  </a>
+                </div>
+
+                <div class="swiper-slide">
+                  <a href="{% url 'shivaji-maharaj-warfare' %}" class="img-bg d-flex align-items-end" style="background-image: url('static/img/shivaji-maharaj.jpg');">
+                    <div class="img-bg-inner">
+                      <h2>Shivaji Maharaj and Guerrilla Warfare Tactics</h2>
+                      <p>From the land of Marathas spread the globally acclaimed style of warfare, the Guerrilla Warfare. </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="custom-swiper-button-next">
+                <span class="bi-chevron-right"></span>
+              </div>
+              <div class="custom-swiper-button-prev">
+                <span class="bi-chevron-left"></span>
+              </div>
+
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- End Hero Slider Section -->
+
+    <!-- ======= Post Grid Section ======= -->
+
+    <!-- ======= VIP Post Section ======= -->
+    <section id="posts" class="posts">
+      <div class="container" data-aos="fade-up">
+        <div class="row g-5">
+          <div class="col-lg-4">
+            {% for vp in vippost %}
+
+            <div class="post-entry-1 lg">
+              <a href="{% url 'vip-post-detail' vp.id %}"><img src="{{vp.image.url}}" alt="" class="img-fluid"></a>
+              <div class="post-meta"><span class="date">{{vp.category}}</span> <span class="mx-1">&bullet;</span> <span>{{vp.date_posted|date:"F d, Y"}}</span></div>
+              <h2><a href="{% url 'vip-post-detail' vp.id %}">{{vp.title}}</a></h2>
+              <p class="mb-4 d-block">{{vp.description}}</p>
+
+              <div class="d-flex align-items-center author">
+                <div class="photo"><img src="{{ vp.author.profile.image.url }}" alt="{{ vp.author }}" class="img-fluid"></div>
+                <div class="name">
+                  <h3 class="m-0 p-0 text-capitalize">{{vp.author}}</h3>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <!-- ======= VIP Post Section End ======= -->
+
+          <!-- ======= Regular Post Section ======= -->
+          
+          <div class="col-lg-8">
+            <div class="row g-5">
+              <div class="col-lg-8 border-start custom-border">
+
+                <div class="container">
+                  <div class="row">
+                    {% for p in post %}
+                      <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
+                        <a href="{% url 'post-detail' p.id %}"><img src="{{p.image.url}}" alt="" class="img-fluid"></a><br><br>
+                        <div class="post-meta"><span class="date">{{p.category}}</span> <span class="mx-1">&bullet;</span> <span>{{p.date_posted|date:"F d, Y"}}</span></div>
+                        <h2><a href="{% url 'post-detail' p.id %}">{{p.title}}</a></h2>
+                        <p class="mb-4 d-block">{{p.description}}</p>
+
+                      </div>
+                      {% endfor %}
+
+                      <!-- ======= Pagination Section ======= -->
+
+                      <div class="">
+
+                        {% if page_obj.has_previous %}
+                          <a class="btn btn-outline-dark mb-4" href="?page=1">First</a>
+                          <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                          {% if page_obj.number == num %}
+                            <a class="btn btn-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+                          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a class="btn btn-outline-dark mb-4" href="?page={{ num }}">{{ num }}</a>
+                          {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                          <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                          <a class="btn btn-outline-dark mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        {% endif %}
+
+                      </div>
+
+                      <!-- ======= End Pagination Section ======= -->
+
+                  </div>
+                </div>
+              </div>
+              <!-- ======= Regular Post Section End ======= -->
+            
+
+              <!-- Trending Section -->
+              <div class="col-lg-4">
+                
+
+                <div class="trending">
+                  <h3>Trending</h3>
+                  <ul class="trending-post">
+                    
+                    {% for vp in tranding_vippost %}
+                    <li>
+                      <a href="{% url 'tranding-vip-post-detail' vp.id %}">
+                        
+                        <h3>{{vp.title}}</h3>
+                        <span class="text-capitalize">{{vp.author}}</span>
+                      </a>
+                    </li>
+                    {% endfor %}
+                    
+                    {% for p in tranding_post %}
+                    <li>
+                      <a href="{% url 'tranding-post-detail' p.id %}">
+                        
+                        <h3>{{p.title}}</h3>
+                        <span class="text-capitalize">{{p.author}}</span>
+                      </a>
+                    </li>
+                    {% endfor %}
+
+                  </ul>
+                </div>
+              
+
+              </div> <!-- End Trending Section -->
+            </div>
+          </div>
+
+        </div> <!-- End .row -->
+      </div>
+    </section> <!-- End Post Grid Section -->
+  </main><!-- End #main -->
+
+{% endblock content %}
